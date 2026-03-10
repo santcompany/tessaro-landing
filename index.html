@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tessaro Advogados — Trabalhista Empresarial · Contratos · Agronegócio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Mulish:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   RESET & TOKENS — paleta da imagem
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* extraídos da imagem: carvão quente, sem azul */
+  --void:    #161412;   /* mais escuro */
+  --dark:    #222019;   /* fundo principal */   
+  --mid:     #2B2822;   /* seções alt */
+  --surface: #35312B;   /* cards */
+  --panel:   #3E3A32;   /* hover/accent panel */
+
+  /* a imagem tem um warmth marrom-acinzentado — sem acento vibrante */
+  /* o único "brilho" é a tipografia creme e os realces geométricos */
+  --gold:    #B8896A;   /* cobre terracota — fiel ao marrom da logo */
+  --gold-lt: #D4A882;
+  --gold-dk: #8C6348;
+  --gold-dim:rgba(184,137,106,.09);
+
+  /* tipografia — o creme cálido da foto */
+  --text:    #EAE4DC;
+  --text2:   rgba(234,228,220,.52);
+  --text3:   rgba(234,228,220,.28);
+  --text4:   rgba(234,228,220,.09);
+
+  --border:  rgba(184,137,106,.15);
+  --border2: rgba(234,228,220,.07);
+
+  --nav-h: 68px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Mulish', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* grain */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 9000;
+  pointer-events: none; opacity: .032;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px;
+}
+
+/* ═══════════════════════════════════════════
+   FORMAS GEOMÉTRICAS — elementos visuais
+   inspirados nas facetas angulares da imagem
+═══════════════════════════════════════════ */
+.geo {
+  position: absolute; pointer-events: none;
+  overflow: hidden;
+}
+/* polígono angular estilo da identidade */
+.geo-shape {
+  position: absolute;
+  background: linear-gradient(135deg, rgba(234,228,220,.04) 0%, transparent 60%);
+  transform-origin: center;
+}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--nav-h); z-index: 900;
+  background: rgba(34,32,25,.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border2);
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 0 64px;
+  transition: border-color .4s;
+}
+.site-nav.scrolled { border-bottom-color: var(--border); }
+
+.nav-logo {
+  text-decoration: none; color: var(--text);
+  display: flex; flex-direction: column;
+  line-height: 1; flex-shrink: 0;
+}
+.nav-logo-name {
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px; font-weight: 200;
+  letter-spacing: 8px; text-transform: uppercase;
+  color: var(--text);
+}
+.nav-logo-sub {
+  font-size: 7px; font-weight: 400;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--text3); margin-top: 5px;
+}
+
+.nav-links {
+  display: flex; gap: 40px;
+  list-style: none; align-items: center;
+}
+.nav-links a {
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--text3); text-decoration: none;
+  transition: color .25s; white-space: nowrap;
+}
+.nav-links a:hover { color: var(--text); }
+
+.nav-cta {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--gold-lt);
+  padding: 9px 22px;
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  text-decoration: none; flex-shrink: 0;
+  transition: background .3s, border-color .3s;
+}
+.nav-cta:hover {
+  background: var(--gold-dim);
+  border-color: var(--gold);
+}
+
+.nav-hamburger {
+  display: none; flex-direction: column;
+  gap: 6px; background: none; border: none;
+  width: 40px; height: 40px;
+  align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+}
+.nav-hamburger span {
+  display: block; width: 20px; height: 1px;
+  background: var(--text); transition: transform .3s, opacity .3s;
+}
+
+/* ═══════════════════════════════════════════
+   MENU MOBILE
+═══════════════════════════════════════════ */
+.mob-menu {
+  position: fixed; inset: 0; z-index: 950;
+  background: var(--void);
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 80px 44px 60px;
+  transform: translateX(100%);
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+  pointer-events: none;
+}
+.mob-menu.is-open { transform: translateX(0); pointer-events: auto; }
+.mob-menu__close {
+  position: absolute; top: 22px; right: 22px;
+  width: 44px; height: 44px; background: none; border: none;
+  font-size: 18px; color: var(--text3);
+  cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  transition: color .2s;
+}
+.mob-menu__close:hover { color: var(--text); }
+.mob-menu a {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(28px, 7vw, 46px);
+  font-weight: 400; font-style: italic;
+  color: var(--text3); text-decoration: none;
+  padding: 14px 0; border-bottom: 1px solid var(--border2);
+  display: block; transition: color .2s, padding-left .25s;
+}
+.mob-menu a:last-child { border-bottom: none; }
+.mob-menu a:hover { color: var(--text); padding-left: 12px; }
+
+/* ═══════════════════════════════════════════
+   HERO — tela cheia, geométrico
+═══════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  padding-top: var(--nav-h);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+/* fundo com facetas geométricas — como a imagem */
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden;
+}
+.hero-bg::before {
+  content: ''; position: absolute;
+  top: -10%; right: -5%;
+  width: 55%; height: 130%;
+  background: linear-gradient(125deg, var(--mid) 0%, var(--void) 100%);
+  clip-path: polygon(18% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+.hero-bg::after {
+  content: ''; position: absolute;
+  top: 20%; right: 8%;
+  width: 30%; height: 65%;
+  background: linear-gradient(145deg, var(--surface) 0%, transparent 80%);
+  clip-path: polygon(25% 0%, 100% 5%, 85% 100%, 0% 90%);
+  opacity: .6;
+}
+/* faceta superior direita */
+.hero-facet-1 {
+  position: absolute; top: 0; right: 0;
+  width: 28%; height: 45%;
+  background: var(--panel);
+  clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 75%);
+  opacity: .5; z-index: 1;
+}
+/* faceta inferior esquerda */
+.hero-facet-2 {
+  position: absolute; bottom: 0; left: 0;
+  width: 22%; height: 38%;
+  background: var(--surface);
+  clip-path: polygon(0% 25%, 100% 0%, 100% 100%, 0% 100%);
+  opacity: .6; z-index: 1;
+}
+/* linha diagonal decorativa */
+.hero-line {
+  position: absolute;
+  top: 0; left: 52%;
+  width: 1px; height: 100%;
+  background: linear-gradient(to bottom, transparent, var(--border), transparent);
+  z-index: 2;
+}
+
+.hero__left {
+  padding: 80px 72px 80px 80px;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  position: relative; z-index: 3;
+}
+
+.hero__right {
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 3;
+  padding: 80px 64px;
+}
+
+/* eyebrow */
+.hero__eyebrow {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 32px;
+  animation: fadeUp .9s ease both;
+}
+.hero__eyebrow-line { width: 30px; height: 1px; background: var(--gold); }
+.hero__eyebrow-txt {
+  font-size: 8.5px; font-weight: 500;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold);
+}
+
+.hero__h1 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(48px, 5vw, 82px);
+  font-weight: 400; line-height: .97;
+  letter-spacing: -1px; margin-bottom: 28px;
+  animation: fadeUp .9s ease .08s both;
+}
+.hero__h1 em {
+  font-style: italic; display: block;
+  color: var(--text2);
+}
+
+.hero__p {
+  font-size: 14.5px; font-weight: 300;
+  line-height: 1.9; color: var(--text2);
+  max-width: 420px; margin-bottom: 44px;
+  animation: fadeUp .9s ease .16s both;
+}
+.hero__p strong { color: var(--text); font-weight: 400; }
+
+.hero__btns {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  margin-bottom: 60px;
+  animation: fadeUp .9s ease .24s both;
+}
+
+/* dados flutuantes lado direito */
+.hero__panel {
+  width: 100%;
+  max-width: 360px;
+  border: 1px solid var(--border);
+  background: rgba(34,32,25,.7);
+  backdrop-filter: blur(12px);
+  animation: fadeUp .9s ease .32s both;
+}
+.hpanel-head {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border2);
+  font-size: 8px; font-weight: 500;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--text3);
+}
+.hpanel-item {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border2);
+  display: flex; gap: 16px; align-items: flex-start;
+  transition: background .25s;
+}
+.hpanel-item:last-child { border-bottom: none; }
+.hpanel-item:hover { background: var(--gold-dim); }
+.hpanel-ico {
+  font-size: 16px; flex-shrink: 0; margin-top: 2px;
+  opacity: .6;
+}
+.hpanel-label {
+  font-size: 8px; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 4px;
+}
+.hpanel-val {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 15px; font-weight: 400;
+  color: var(--text); line-height: 1.3;
+}
+.hpanel-sub {
+  font-size: 11.5px; font-weight: 300;
+  color: var(--text3); margin-top: 3px;
+}
+
+/* credenciais */
+.hero__creds {
+  display: flex; gap: 0;
+  border: 1px solid var(--border2);
+  width: fit-content;
+  animation: fadeUp .9s ease .32s both;
+}
+.hcred {
+  padding: 14px 24px;
+  border-right: 1px solid var(--border2);
+}
+.hcred:last-child { border-right: none; }
+.hcred__val {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 28px; font-weight: 400; line-height: 1;
+  color: var(--gold-lt);
+}
+.hcred__val sup { font-size: 13px; }
+.hcred__lbl {
+  font-size: 8px; font-weight: 400;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text3); margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════
+   BOTÕES
+═══════════════════════════════════════════ */
+.btn-primary {
+  background: var(--gold);
+  color: var(--void);
+  padding: 14px 30px;
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase;
+  text-decoration: none; display: inline-block;
+  transition: background .25s, transform .25s, box-shadow .25s;
+}
+.btn-primary:hover {
+  background: var(--gold-lt);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(200,174,126,.18);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text2);
+  padding: 13px 30px;
+  border: 1px solid var(--border);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 3px; text-transform: uppercase;
+  text-decoration: none; display: inline-block;
+  transition: border-color .25s, color .25s, background .25s;
+}
+.btn-ghost:hover {
+  border-color: var(--text3);
+  color: var(--text);
+}
+
+/* ═══════════════════════════════════════════
+   TICKER
+═══════════════════════════════════════════ */
+.ticker {
+  overflow: hidden; padding: 11px 0;
+  background: var(--void);
+  border-top: 1px solid var(--border2);
+  border-bottom: 1px solid var(--border2);
+  position: relative; z-index: 10;
+}
+.ticker__track {
+  display: flex; width: max-content;
+  animation: ticker 44s linear infinite;
+}
+.ticker__item {
+  display: flex; align-items: center; gap: 20px;
+  padding: 0 36px; white-space: nowrap;
+  font-size: 9px; font-weight: 400;
+  letter-spacing: 3.5px; text-transform: uppercase;
+  color: var(--text3);
+}
+.ticker__sep { color: var(--gold); font-size: 7px; }
+
+/* ═══════════════════════════════════════════
+   SEÇÕES BASE
+═══════════════════════════════════════════ */
+.section { padding: 112px 80px; position: relative; }
+.section--dark  { background: var(--dark); }
+.section--mid   { background: var(--mid); }
+.section--void  { background: var(--void); }
+
+.s-eye {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 8.5px; font-weight: 500;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+}
+.s-eye::before { content: ''; width: 22px; height: 1px; background: var(--gold); flex-shrink: 0; }
+
+.s-h {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(32px, 3.4vw, 56px);
+  font-weight: 400; line-height: 1.07;
+  letter-spacing: -.2px; margin-bottom: 14px;
+}
+.s-h em { font-style: italic; color: var(--text2); }
+.s-p {
+  font-size: 14.5px; font-weight: 300;
+  line-height: 1.9; color: var(--text2);
+  max-width: 500px;
+}
+
+/* ═══════════════════════════════════════════
+   PILARES — o que o escritório resolve
+═══════════════════════════════════════════ */
+.pilares-head {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: end; margin-bottom: 56px;
+}
+.pilares-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border2);
+  border: 1px solid var(--border2);
+}
+.pilar-card {
+  background: var(--dark);
+  padding: 40px 30px;
+  position: relative; overflow: hidden;
+  transition: background .3s;
+}
+.pilar-card:hover { background: var(--mid); }
+.pilar-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: transparent;
+  transition: background .3s;
+}
+.pilar-card:hover::before { background: var(--gold); }
+/* número de fundo */
+.pilar-card::after {
+  content: attr(data-n);
+  position: absolute; right: 18px; bottom: 12px;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 72px; font-weight: 700;
+  color: var(--text4); line-height: 1;
+  pointer-events: none; user-select: none;
+}
+.pilar-ico { font-size: 26px; margin-bottom: 20px; display: block; opacity: .7; }
+.pilar-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 20px; font-weight: 400;
+  line-height: 1.2; color: var(--text);
+  margin-bottom: 12px;
+}
+.pilar-title em { font-style: italic; }
+.pilar-desc {
+  font-size: 13px; font-weight: 300;
+  color: var(--text2); line-height: 1.8;
+  margin-bottom: 20px;
+}
+.pilar-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.pilar-tag {
+  font-size: 8px; font-weight: 500;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  color: var(--text3);
+  transition: border-color .2s, color .2s;
+}
+.pilar-card:hover .pilar-tag { border-color: var(--border); color: var(--text2); }
+
+/* card destaque — trabalhista */
+.pilar-card.feat {
+  background: var(--surface); grid-column: span 2;
+}
+.pilar-card.feat:hover { background: var(--panel); }
+.pilar-card.feat .pilar-title { font-size: 26px; }
+.pilar-card.feat .pilar-desc { max-width: 520px; }
+
+/* ═══════════════════════════════════════════
+   ABORDAGEM — como o escritório pensa
+═══════════════════════════════════════════ */
+.abord-split {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 96px; align-items: center;
+}
+.abord-visual {
+  position: relative; aspect-ratio: 1/1.1;
+}
+/* composição geométrica visual — inspirada na imagem */
+.abord-geo {
+  position: absolute; inset: 0;
+  overflow: hidden;
+}
+.abord-geo::before {
+  content: ''; position: absolute;
+  inset: 0;
+  background: var(--surface);
+  clip-path: polygon(15% 0%, 100% 0%, 100% 85%, 85% 100%, 0% 100%, 0% 15%);
+}
+.abord-geo::after {
+  content: ''; position: absolute;
+  top: 8%; right: 8%; bottom: 8%; left: 8%;
+  background: linear-gradient(135deg, var(--mid) 0%, var(--void) 100%);
+  clip-path: polygon(20% 0%, 100% 0%, 100% 80%, 80% 100%, 0% 100%, 0% 20%);
+}
+.abord-inner {
+  position: absolute; inset: 0;
+  z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0;
+  padding: 40px;
+}
+.abord-stat {
+  width: 100%; padding: 18px 0;
+  border-bottom: 1px solid var(--border2);
+  display: flex; justify-content: space-between;
+  align-items: baseline; gap: 20px;
+}
+.abord-stat:first-child { border-top: 1px solid var(--border2); }
+.abord-num {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 42px; font-weight: 400;
+  color: var(--gold-lt); line-height: 1;
+  letter-spacing: -1px;
+}
+.abord-num sup { font-size: 16px; letter-spacing: 0; }
+.abord-lbl {
+  font-size: 10px; font-weight: 300;
+  letter-spacing: 1px; color: var(--text3);
+  text-align: right; max-width: 130px; line-height: 1.4;
+}
+/* canto decorativo */
+.abord-visual::before {
+  content: ''; position: absolute; z-index: 3;
+  top: -14px; left: -14px; width: 32px; height: 32px;
+  border-top: 1px solid var(--gold); border-left: 1px solid var(--gold);
+}
+.abord-visual::after {
+  content: ''; position: absolute; z-index: 3;
+  bottom: -14px; right: -14px; width: 32px; height: 32px;
+  border-bottom: 1px solid var(--gold); border-right: 1px solid var(--gold);
+}
+
+.abord-content { }
+.abord-items { margin-top: 40px; display: flex; flex-direction: column; }
+.abord-item {
+  display: flex; gap: 20px; align-items: flex-start;
+  padding: 20px 0; border-bottom: 1px solid var(--border2);
+  transition: padding-left .2s;
+}
+.abord-item:hover { padding-left: 8px; }
+.abord-item-num {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 12px; font-weight: 400; font-style: italic;
+  color: var(--gold); flex-shrink: 0; margin-top: 3px; width: 22px;
+}
+.abord-item-title {
+  font-size: 14px; font-weight: 500;
+  color: var(--text); margin-bottom: 5px;
+}
+.abord-item-desc {
+  font-size: 12.5px; font-weight: 300;
+  color: var(--text3); line-height: 1.75;
+}
+
+/* ═══════════════════════════════════════════
+   AGRONEGÓCIO — seção especial
+═══════════════════════════════════════════ */
+.agro-wrap {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 520px;
+}
+.agro-left {
+  background: var(--void);
+  padding: 80px 72px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+/* faceta decorativa dentro */
+.agro-left::before {
+  content: ''; position: absolute;
+  top: -10%; right: -20%;
+  width: 60%; height: 120%;
+  background: var(--surface);
+  clip-path: polygon(40% 0%, 100% 0%, 100% 100%, 0% 100%);
+  opacity: .25;
+}
+.agro-left::after {
+  content: ''; position: absolute;
+  top: 0; right: 0; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--border), transparent);
+}
+.agro-right {
+  background: var(--mid);
+  padding: 80px 64px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.agro-right::before {
+  content: ''; position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 40%;
+  background: linear-gradient(to top, var(--void) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.agro-titulo {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(28px, 3vw, 46px);
+  font-weight: 400; line-height: 1.1;
+  margin-bottom: 16px;
+}
+.agro-titulo em { font-style: italic; color: var(--gold-lt); }
+
+.agro-items { display: flex; flex-direction: column; margin-top: 32px; }
+.agro-item {
+  padding: 16px 0; border-bottom: 1px solid var(--border2);
+  display: flex; gap: 16px; align-items: center;
+}
+.agro-item:last-child { border-bottom: none; }
+.agro-item::before {
+  content: ''; width: 4px; height: 4px;
+  background: var(--gold); border-radius: 50%; flex-shrink: 0;
+}
+.agro-item-txt {
+  font-size: 13.5px; font-weight: 300;
+  color: var(--text2); line-height: 1.5;
+}
+.agro-item-txt strong { color: var(--text); font-weight: 400; }
+
+/* destaque MS */
+.agro-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  border: 1px solid var(--border); padding: 10px 18px;
+  margin-top: 28px; width: fit-content;
+}
+.agro-badge-txt {
+  font-size: 8.5px; font-weight: 500;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--text3);
+}
+.agro-badge span { font-size: 14px; opacity: .5; }
+
+/* ═══════════════════════════════════════════
+   DR. TESSARO
+═══════════════════════════════════════════ */
+.tessaro-split {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 96px; align-items: center;
+}
+.tessaro-visual { position: relative; }
+.tessaro-frame {
+  background: var(--surface);
+  aspect-ratio: 3/4;
+  position: relative; overflow: hidden;
+  clip-path: polygon(0% 0%, 90% 0%, 100% 10%, 100% 100%, 10% 100%, 0% 90%);
+}
+.tessaro-frame::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(145deg, var(--panel) 0%, var(--void) 100%);
+}
+.tessaro-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+}
+.tessaro-placeholder span { font-size: 72px; opacity: .1; }
+.tessaro-placeholder p {
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--text3);
+}
+.tessaro-bottom {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+  background: linear-gradient(to top, rgba(22,20,18,.9) 0%, transparent 100%);
+  padding: 28px 26px;
+}
+.tessaro-bottom h3 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 20px; font-weight: 400; color: var(--text);
+}
+.tessaro-bottom span {
+  font-size: 8.5px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--text3);
+}
+
+/* cantos da foto */
+.tessaro-visual::before {
+  content: ''; position: absolute; top: -12px; left: -12px;
+  width: 28px; height: 28px; z-index: 3;
+  border-top: 1px solid var(--gold); border-left: 1px solid var(--gold);
+}
+.tessaro-visual::after {
+  content: ''; position: absolute; bottom: -12px; right: -12px;
+  width: 28px; height: 28px; z-index: 3;
+  border-bottom: 1px solid var(--gold); border-right: 1px solid var(--gold);
+}
+.tessaro-badge {
+  position: absolute; top: 22px; right: -18px; z-index: 4;
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 14px 16px; text-align: center;
+}
+.tessaro-badge b {
+  display: block; font-family: 'Libre Baskerville', serif;
+  font-size: 28px; font-weight: 400;
+  color: var(--gold-lt); line-height: 1;
+}
+.tessaro-badge small {
+  font-size: 7.5px; font-weight: 400;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text3);
+}
+
+.tessaro-creds { margin-top: 36px; display: flex; flex-direction: column; }
+.tcred {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 16px 0; border-bottom: 1px solid var(--border2);
+  transition: padding-left .2s;
+}
+.tcred:hover { padding-left: 6px; }
+.tcred__ico { font-size: 16px; flex-shrink: 0; margin-top: 2px; opacity: .5; }
+.tcred__lbl {
+  font-size: 8px; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 3px;
+}
+.tcred__val { font-size: 14px; font-weight: 400; color: var(--text); }
+.tcred__sub { font-size: 12px; font-weight: 300; color: var(--text3); margin-top: 2px; }
+
+/* ═══════════════════════════════════════════
+   FAQ
+═══════════════════════════════════════════ */
+.faq-split { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; }
+.faq-list { display: flex; flex-direction: column; }
+.faq-item { border-bottom: 1px solid var(--border2); }
+.faq-btn {
+  width: 100%; background: none; border: none;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 20px; padding: 18px 0; text-align: left;
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px; font-weight: 300; color: var(--text2);
+  transition: color .2s; cursor: pointer;
+}
+.faq-btn:hover { color: var(--text); }
+.faq-icon {
+  width: 22px; height: 22px; flex-shrink: 0;
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--gold);
+  transition: transform .3s, background .3s, border-color .3s;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); background: var(--gold-dim); border-color: var(--border); }
+.faq-answer {
+  max-height: 0; overflow: hidden;
+  font-size: 13px; font-weight: 300;
+  line-height: 1.85; color: var(--text3);
+  transition: max-height .4s ease, padding .4s;
+}
+.faq-item.open .faq-answer { max-height: 240px; padding-bottom: 18px; }
+
+/* ═══════════════════════════════════════════
+   CONTATO
+═══════════════════════════════════════════ */
+.contato-wrap { display: grid; grid-template-columns: 1fr 1fr; }
+
+.cont-left {
+  background: var(--void); padding: 96px 72px;
+  position: relative; overflow: hidden;
+}
+.cont-left::before {
+  content: ''; position: absolute;
+  bottom: 0; right: -15%;
+  width: 50%; height: 60%;
+  background: var(--surface);
+  clip-path: polygon(20% 0%, 100% 30%, 100% 100%, 0% 100%);
+  opacity: .15;
+}
+.cont-left::after {
+  content: ''; position: absolute;
+  top: 0; right: 0; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--border), transparent);
+}
+
+.cont-infos { margin-top: 36px; display: flex; flex-direction: column; }
+.c-info {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 16px 0; border-bottom: 1px solid var(--border2);
+}
+.c-ico { font-size: 15px; flex-shrink: 0; margin-top: 2px; opacity: .4; }
+.c-lbl {
+  font-size: 8px; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 3px;
+}
+.c-val { font-size: 13px; font-weight: 300; color: var(--text2); line-height: 1.5; }
+
+.cont-right { background: var(--mid); padding: 96px 72px; }
+
+.c-form { display: flex; flex-direction: column; gap: 14px; }
+.c-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.c-group { display: flex; flex-direction: column; gap: 5px; }
+.c-label {
+  font-size: 8px; font-weight: 500;
+  letter-spacing: 2.5px; text-transform: uppercase; color: var(--text3);
+}
+.c-inp, .c-sel, .c-ta {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  padding: 12px 14px;
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px; font-weight: 300; color: var(--text);
+  outline: none; transition: border-color .25s, background .25s;
+}
+.c-inp::placeholder, .c-ta::placeholder { color: var(--text3); }
+.c-inp:focus, .c-sel:focus, .c-ta:focus {
+  border-color: var(--gold); background: var(--panel);
+}
+.c-sel option { background: var(--surface); color: var(--text); }
+.c-ta { height: 96px; resize: vertical; }
+.c-btns { display: flex; gap: 12px; margin-top: 4px; }
+.c-sub {
+  flex: 1; background: var(--gold); color: var(--void); border: none;
+  padding: 14px 20px; cursor: pointer;
+  font-family: 'Mulish', sans-serif;
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  transition: background .3s;
+}
+.c-sub:hover { background: var(--gold-lt); }
+.c-wa {
+  background: rgba(184,137,106,.08);
+  border: 1px solid rgba(184,137,106,.25);
+  color: var(--gold-lt);
+  padding: 14px 18px;
+  font-family: 'Mulish', sans-serif;
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  text-decoration: none;
+  display: flex; align-items: center; gap: 8px;
+  transition: background .3s; white-space: nowrap;
+}
+.c-wa:hover { background: rgba(184,137,106,.16); }
+
+/* ═══════════════════════════════════════════
+   CTA FINAL
+═══════════════════════════════════════════ */
+.sec-cta {
+  background: var(--void);
+  padding: 100px 80px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+/* facetas decorativas */
+.sec-cta::before {
+  content: ''; position: absolute;
+  top: -20%; right: -5%; width: 35%; height: 140%;
+  background: var(--surface);
+  clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 10% 100%);
+  opacity: .18;
+}
+.sec-cta::after {
+  content: ''; position: absolute;
+  bottom: -20%; left: -5%; width: 30%; height: 120%;
+  background: var(--mid);
+  clip-path: polygon(0% 0%, 80% 0%, 100% 100%, 0% 100%);
+  opacity: .25;
+}
+.cta-eye {
+  font-size: 8.5px; font-weight: 500;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 20px;
+  position: relative; z-index: 1;
+}
+.cta-h {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(32px, 4vw, 64px);
+  font-weight: 400; line-height: 1.05;
+  color: var(--text); margin-bottom: 20px;
+  letter-spacing: -.5px; position: relative; z-index: 1;
+}
+.cta-h em { font-style: italic; color: var(--text2); }
+.cta-p {
+  font-size: 14.5px; font-weight: 300;
+  color: var(--text3); max-width: 460px;
+  margin: 0 auto 40px; line-height: 1.9;
+  position: relative; z-index: 1;
+}
+.cta-btns {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  justify-content: center; position: relative; z-index: 1;
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+.site-footer {
+  background: var(--void);
+  border-top: 1px solid var(--border2);
+  padding: 52px 80px 32px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px; align-items: start;
+}
+.fl-logo {
+  font-size: 12px; font-weight: 200;
+  letter-spacing: 6px; text-transform: uppercase;
+  color: var(--text);
+}
+.fl-logo em {
+  display: block; font-style: normal;
+  font-size: 7.5px; font-weight: 400;
+  letter-spacing: 3px; color: var(--text3); margin-top: 5px;
+}
+.fl-copy {
+  font-size: 11px; font-weight: 300;
+  color: var(--text3); line-height: 1.7; margin-top: 14px;
+}
+.fl-nav { display: flex; flex-direction: column; gap: 10px; }
+.fl-nav a {
+  font-size: 10px; font-weight: 400;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text3); text-decoration: none; transition: color .2s;
+}
+.fl-nav a:hover { color: var(--gold); }
+.fl-social { display: flex; flex-direction: column; gap: 10px; }
+.fl-social a {
+  font-size: 11px; font-weight: 300;
+  color: var(--text3); text-decoration: none;
+  display: flex; align-items: center; gap: 10px;
+  transition: color .2s;
+}
+.fl-social a:hover { color: var(--gold-lt); }
+
+/* WA float */
+.wa-float {
+  position: fixed; bottom: 28px; right: 28px; z-index: 800;
+  width: 50px; height: 50px; background: var(--gold-dk);
+  color: white; display: flex; align-items: center;
+  justify-content: center; font-size: 21px;
+  box-shadow: 0 6px 24px rgba(140,99,72,.35);
+  text-decoration: none;
+  transition: transform .3s, box-shadow .3s;
+  clip-path: polygon(10% 0%, 100% 0%, 100% 90%, 90% 100%, 0% 100%, 0% 10%);
+}
+.wa-float:hover { transform: scale(1.1); box-shadow: 0 10px 32px rgba(140,99,72,.45); }
+
+/* ═══════════════════════════════════════════
+   ANIMAÇÕES
+═══════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal.r1 { transition-delay: 0s; }
+.reveal.r2 { transition-delay: .1s; }
+.reveal.r3 { transition-delay: .2s; }
+
+/* ═══════════════════════════════════════════
+   DIAGNÓSTICO DE RISCO
+═══════════════════════════════════════════ */
+.diag-wrap {
+  display: grid; grid-template-columns: 1fr 1.4fr;
+  gap: 96px; align-items: start;
+}
+.diag-disclaimer {
+  margin-top: 28px;
+  font-size: 10px; font-weight: 400;
+  letter-spacing: 1.5px; color: var(--text3);
+  font-style: italic;
+  border-left: 2px solid var(--border);
+  padding-left: 12px;
+}
+
+.diag-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  position: relative; overflow: hidden;
+}
+/* faceta de fundo no card */
+.diag-card::before {
+  content: ''; position: absolute;
+  bottom: -10%; right: -10%; width: 55%; height: 55%;
+  background: var(--panel);
+  clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
+  opacity: .4; pointer-events: none;
+}
+
+/* barra de progresso */
+.diag-progress-wrap {
+  height: 2px; background: var(--border2); overflow: hidden;
+}
+.diag-progress-bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--gold-dk), var(--gold-lt));
+  transition: width .5s cubic-bezier(.4,0,.2,1);
+}
+.diag-step-label {
+  padding: 14px 28px 0;
+  font-size: 8.5px; font-weight: 500;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--text3);
+}
+
+/* perguntas */
+.diag-questions { padding: 24px 28px 32px; }
+.diag-q { display: none; }
+.diag-q.active { display: block; }
+
+.diag-q-txt {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 18px; font-weight: 400;
+  line-height: 1.45; color: var(--text);
+  margin-bottom: 24px;
+}
+
+.diag-opts {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.diag-opt {
+  background: var(--mid);
+  border: 1px solid var(--border2);
+  padding: 14px 18px; text-align: left;
+  font-family: 'Mulish', sans-serif;
+  font-size: 13.5px; font-weight: 300; color: var(--text2);
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: border-color .2s, color .2s, background .2s, transform .15s;
+}
+.diag-opt::before {
+  content: ''; position: absolute;
+  left: 0; top: 0; bottom: 0; width: 0;
+  background: var(--gold-dk);
+  opacity: .12;
+  transition: width .25s ease;
+}
+.diag-opt:hover { border-color: var(--border); color: var(--text); transform: translateX(4px); }
+.diag-opt:hover::before { width: 100%; }
+.diag-opt.selected {
+  border-color: var(--gold);
+  color: var(--text);
+  background: var(--gold-dim);
+}
+.diag-opt.selected::before { width: 100%; opacity: .2; }
+
+/* animação de entrada da pergunta */
+@keyframes slideInQ {
+  from { opacity: 0; transform: translateX(18px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.diag-q.active { animation: slideInQ .35s ease both; }
+
+/* resultado */
+.diag-result {
+  display: none; padding: 32px 28px 36px;
+  animation: slideInQ .45s ease both;
+}
+.diag-result.visible { display: block; }
+
+.diag-result-icon {
+  font-size: 40px; margin-bottom: 16px;
+}
+.diag-result-nivel {
+  font-size: 8.5px; font-weight: 600;
+  letter-spacing: 3.5px; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.diag-result-titulo {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 24px; font-weight: 400;
+  line-height: 1.2; color: var(--text);
+  margin-bottom: 14px;
+}
+.diag-result-desc {
+  font-size: 13.5px; font-weight: 300;
+  color: var(--text2); line-height: 1.85;
+  margin-bottom: 22px;
+}
+.diag-result-itens {
+  display: flex; flex-direction: column; gap: 8px;
+  margin-bottom: 28px;
+}
+.diag-result-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  font-size: 12.5px; font-weight: 300;
+  color: var(--text2); line-height: 1.5;
+  padding: 10px 14px;
+  background: var(--mid); border-left: 2px solid var(--gold-dk);
+}
+.diag-result-btns {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+
+/* cores dos níveis de risco */
+.nivel-baixo  { color: var(--gold-lt); }
+.nivel-medio  { color: #C4955A; }
+.nivel-alto   { color: #C47A5A; }
+.nivel-critico{ color: #C45A5A; }
+
+@media (max-width: 768px) {
+  .diag-wrap { grid-template-columns: 1fr; gap: 36px; }
+  .diag-result-btns { flex-direction: column; }
+  .diag-result-btns a, .diag-result-btns button { width: 100%; text-align: center; }
+}
+
+
+
+/* acordeão dos pilares 02–04 */
+.pilar-acc { padding: 0; }
+.pilar-acc-btn {
+  width: 100%; background: none; border: none;
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 16px;
+  padding: 28px 30px; text-align: left;
+  cursor: pointer;
+  transition: background .2s;
+}
+.pilar-acc-btn:hover { background: rgba(237,232,223,.03); }
+.pilar-acc-left {
+  display: flex; align-items: center; gap: 16px;
+}
+.pilar-ico-sm { font-size: 20px; opacity: .6; flex-shrink: 0; }
+.pilar-acc .pilar-title { margin-bottom: 0; font-size: 18px; }
+.pilar-acc-icon {
+  font-size: 20px; color: var(--gold);
+  flex-shrink: 0; line-height: 1;
+  transition: transform .35s ease, color .2s;
+  font-weight: 200; font-family: 'Mulish', sans-serif;
+}
+.pilar-acc.open .pilar-acc-icon { transform: rotate(45deg); }
+.pilar-acc-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height .45s cubic-bezier(.4,0,.2,1), padding .45s;
+  padding: 0 30px;
+}
+.pilar-acc.open .pilar-acc-body {
+  max-height: 300px;
+  padding: 0 30px 28px;
+}
+.pilar-acc .pilar-desc { margin-top: 0; }
+.pilar-acc::before { display: none; }
+
+/* linha no topo ao abrir */
+.pilar-acc.open { background: var(--mid); }
+.pilar-acc.open::after {
+  content: ''; display: block;
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: var(--gold);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  :root { --nav-h: 62px; }
+
+  .site-nav { padding: 0 18px; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-hamburger { display: flex; }
+
+  .hero { grid-template-columns: 1fr; }
+  .hero__right { display: none; }
+  .hero__left {
+    padding: 40px 22px 56px;
+    min-height: calc(100svh - var(--nav-h));
+  }
+  .hero__creds { flex-wrap: wrap; }
+  .hcred { flex: 1; min-width: 80px; padding: 12px 14px; }
+  .hero__btns { flex-direction: column; }
+  .hero__btns a { width: 100%; text-align: center; }
+
+  .section { padding: 64px 22px; }
+
+  .pilares-head { grid-template-columns: 1fr; gap: 28px; }
+  .pilares-grid { grid-template-columns: 1fr; }
+  .pilar-card.feat { grid-column: span 1; }
+
+  .abord-split { grid-template-columns: 1fr; gap: 40px; }
+  .abord-visual { aspect-ratio: 1 / .7; }
+
+  .agro-wrap { grid-template-columns: 1fr; }
+  .agro-left, .agro-right { padding: 56px 22px; }
+
+  .tessaro-split { grid-template-columns: 1fr; gap: 40px; }
+  .tessaro-badge { right: 8px; }
+
+  .faq-split { grid-template-columns: 1fr; gap: 36px; }
+
+  .contato-wrap { grid-template-columns: 1fr; }
+  .cont-left, .cont-right { padding: 56px 22px; }
+  .c-row { grid-template-columns: 1fr; }
+  .c-btns { flex-direction: column; }
+  .c-sub, .c-wa { width: 100%; justify-content: center; text-align: center; }
+
+  .sec-cta { padding: 60px 22px; }
+  .cta-btns { flex-direction: column; align-items: stretch; }
+  .cta-btns a { text-align: center; }
+
+  .site-footer { grid-template-columns: 1fr; padding: 44px 22px 28px; gap: 28px; }
+}
+
+@media (min-width: 769px) and (max-width: 1100px) {
+  .site-nav { padding: 0 32px; }
+  .hero__left { padding: 56px 44px 64px; }
+  .section { padding: 88px 44px; }
+  .pilares-grid { grid-template-columns: 1fr 1fr; }
+  .pilar-card.feat { grid-column: span 2; }
+  .abord-split, .tessaro-split { gap: 52px; }
+  .agro-left, .agro-right { padding: 64px 44px; }
+  .contato-wrap { grid-template-columns: 1fr; }
+  .cont-left, .cont-right { padding: 64px 44px; }
+  .site-footer { padding: 48px 44px 28px; }
+}
+</style>
+</head>
+<body>
+
+
+<a href="https://wa.me/5567900000000" target="_blank" class="wa-float">💬</a>
+
+<!-- ══ MENU MOBILE ══ -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-menu__close" id="mobClose">✕</button>
+  <a href="#pilares"    class="mob-link">Atuação</a>
+  <a href="#abordagem"  class="mob-link">Abordagem</a>
+  <a href="#agro"       class="mob-link">Agronegócio</a>
+  <a href="#tessaro"    class="mob-link">Dr. Tessaro</a>
+  <a href="#faq"        class="mob-link">Dúvidas</a>
+  <a href="#diagnostico" class="mob-link">Diagnóstico</a>
+  <a href="#contato"    class="mob-link">Consulta</a>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav class="site-nav" id="siteNav">
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-name">Tessaro</span>
+    <span class="nav-logo-sub">Advogados</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#pilares">Atuação</a></li>
+    <li><a href="#abordagem">Abordagem</a></li>
+    <li><a href="#agro">Agronegócio</a></li>
+    <li><a href="#tessaro">Dr. Tessaro</a></li>
+    <li><a href="#faq">Dúvidas</a></li>
+    <li><a href="#diagnostico">Diagnóstico</a></li>
+  </ul>
+  <a href="#contato" class="nav-cta">Consulta →</a>
+  <button class="nav-hamburger" id="navHamburger">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ══ HERO ══ -->
+<div class="hero" id="top">
+  <!-- fundo geométrico -->
+  <div class="hero-bg"></div>
+  <div class="hero-facet-1"></div>
+  <div class="hero-facet-2"></div>
+  <div class="hero-line"></div>
+
+  <div class="hero__left">
+    <div class="hero__eyebrow">
+      <div class="hero__eyebrow-line"></div>
+      <div class="hero__eyebrow-txt">Advocacia Empresarial · Campo Grande, MS</div>
+    </div>
+    <h1 class="hero__h1">
+      Proteção jurídica<br>para quem
+      <em>emprega, contrata<br>e produz.</em>
+    </h1>
+    <p class="hero__p">
+      Trabalhista pelo <strong>lado do empregador</strong>, contratos que blindam operações e assessoria jurídica para o <strong>agronegócio do Centro-Oeste</strong> — com a precisão que o ambiente empresarial exige.
+    </p>
+    <div class="hero__btns">
+      <a href="#contato" class="btn-primary">Agendar consulta →</a>
+      <a href="#pilares" class="btn-ghost">Conhecer a atuação</a>
+    </div>
+    <div class="hero__creds">
+      <div class="hcred"><div class="hcred__val">+15<sup>anos</sup></div><div class="hcred__lbl">de atuação</div></div>
+      <div class="hcred"><div class="hcred__val">3</div><div class="hcred__lbl">especialidades</div></div>
+      <div class="hcred"><div class="hcred__val">MS</div><div class="hcred__lbl">e região</div></div>
+    </div>
+  </div>
+
+  <div class="hero__right">
+    <div class="hero__panel">
+      <div class="hpanel-head">Principais demandas atendidas</div>
+      <div class="hpanel-item">
+        <div class="hpanel-ico">⚖️</div>
+        <div>
+          <div class="hpanel-label">Trabalhista empresarial</div>
+          <div class="hpanel-val">Defesa do empregador</div>
+          <div class="hpanel-sub">Reclamações, acordos e prevenção de passivos</div>
+        </div>
+      </div>
+      <div class="hpanel-item">
+        <div class="hpanel-ico">📋</div>
+        <div>
+          <div class="hpanel-label">Contratos</div>
+          <div class="hpanel-val">Blindagem contratual</div>
+          <div class="hpanel-sub">Elaboração, revisão e gestão de riscos</div>
+        </div>
+      </div>
+      <div class="hpanel-item">
+        <div class="hpanel-ico">🌾</div>
+        <div>
+          <div class="hpanel-label">Agronegócio</div>
+          <div class="hpanel-val">Produtor rural e cooperativas</div>
+          <div class="hpanel-sub">Arrendamento, contratos e compliance rural</div>
+        </div>
+      </div>
+      <div class="hpanel-item">
+        <div class="hpanel-ico">🏢</div>
+        <div>
+          <div class="hpanel-label">Empresarial</div>
+          <div class="hpanel-val">Estruturação e proteção</div>
+          <div class="hpanel-sub">Societário, fusões e planejamento jurídico</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker__track">
+    <span class="ticker__item">Trabalhista Empresarial <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Contratos Estratégicos <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Agronegócio <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Defesa do Empregador <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Prevenção de Passivos <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Direito Rural <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Compliance Trabalhista <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Tessaro Advogados <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Trabalhista Empresarial <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Contratos Estratégicos <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Agronegócio <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Defesa do Empregador <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Prevenção de Passivos <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Direito Rural <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Compliance Trabalhista <span class="ticker__sep">◆</span></span>
+    <span class="ticker__item">Tessaro Advogados <span class="ticker__sep">◆</span></span>
+  </div>
+</div>
+
+<!-- ══ PILARES ══ -->
+<section class="section section--dark reveal" id="pilares">
+  <div class="pilares-head">
+    <div>
+      <div class="s-eye">Áreas de atuação</div>
+      <h2 class="s-h">Onde atuamos<br>com <em>precisão.</em></h2>
+    </div>
+    <p class="s-p">Cada área foi desenvolvida para atender um perfil específico de cliente: empresas, produtores rurais e gestores que não podem se dar ao luxo de errar no campo jurídico.</p>
+  </div>
+  <div class="pilares-grid">
+
+    <!-- 01 — sempre aberto -->
+    <div class="pilar-card feat reveal r1" data-n="01">
+      <span class="pilar-ico">⚖️</span>
+      <div class="pilar-title">Trabalhista pelo<br><em>lado do patrono</em></div>
+      <p class="pilar-desc">Representação completa do empregador em reclamações trabalhistas, acordos, audiências e instâncias recursais. Estratégia jurídica voltada à redução de condenações e construção de defesas sólidas — antes e depois do processo.</p>
+      <div class="pilar-tags">
+        <span class="pilar-tag">Reclamações</span>
+        <span class="pilar-tag">Acordos</span>
+        <span class="pilar-tag">Recursos</span>
+        <span class="pilar-tag">Compliance</span>
+        <span class="pilar-tag">Auditorias internas</span>
+      </div>
+    </div>
+
+    <!-- 02, 03, 04 — acordeão -->
+    <div class="pilar-card pilar-acc reveal r2" data-n="02">
+      <button class="pilar-acc-btn">
+        <div class="pilar-acc-left">
+          <span class="pilar-ico-sm">📋</span>
+          <div class="pilar-title">Contratos<br><em>estratégicos</em></div>
+        </div>
+        <span class="pilar-acc-icon">+</span>
+      </button>
+      <div class="pilar-acc-body">
+        <p class="pilar-desc">Elaboração, revisão e análise de contratos empresariais com foco em proteção patrimonial e redução de riscos operacionais.</p>
+        <div class="pilar-tags">
+          <span class="pilar-tag">Empresariais</span>
+          <span class="pilar-tag">Prestação de serviços</span>
+          <span class="pilar-tag">Fornecedores</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pilar-card pilar-acc reveal r3" data-n="03">
+      <button class="pilar-acc-btn">
+        <div class="pilar-acc-left">
+          <span class="pilar-ico-sm">🌾</span>
+          <div class="pilar-title">Agronegócio<br><em>& Direito Rural</em></div>
+        </div>
+        <span class="pilar-acc-icon">+</span>
+      </button>
+      <div class="pilar-acc-body">
+        <p class="pilar-desc">Assessoria jurídica especializada para produtores rurais, cooperativas e empresas do agro — do contrato de arrendamento à regularização fundiária.</p>
+        <div class="pilar-tags">
+          <span class="pilar-tag">Arrendamento</span>
+          <span class="pilar-tag">Parceria rural</span>
+          <span class="pilar-tag">Financiamento</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pilar-card pilar-acc reveal r1" data-n="04">
+      <button class="pilar-acc-btn">
+        <div class="pilar-acc-left">
+          <span class="pilar-ico-sm">🏢</span>
+          <div class="pilar-title">Direito<br><em>Empresarial</em></div>
+        </div>
+        <span class="pilar-acc-icon">+</span>
+      </button>
+      <div class="pilar-acc-body">
+        <p class="pilar-desc">Estruturação, reorganização e proteção de empresas — do contrato social à blindagem do patrimônio dos sócios.</p>
+        <div class="pilar-tags">
+          <span class="pilar-tag">Societário</span>
+          <span class="pilar-tag">Dissolução</span>
+          <span class="pilar-tag">M&A</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══ DIAGNÓSTICO ══ -->
+<section class="section section--void reveal" id="diagnostico">
+  <div class="diag-wrap">
+    <div class="diag-intro">
+      <div class="s-eye">Ferramenta exclusiva</div>
+      <h2 class="s-h">Qual é o nível de<br>exposição trabalhista<br><em>da sua empresa?</em></h2>
+      <p class="s-p">Responda 5 perguntas e receba um diagnóstico real do seu risco trabalhista — o mesmo raciocínio que o Dr. Tessaro aplica na primeira consulta.</p>
+      <div class="diag-disclaimer">Diagnóstico orientativo. Não substitui consultoria jurídica.</div>
+    </div>
+    <div class="diag-card" id="diagCard">
+
+      <!-- BARRA DE PROGRESSO -->
+      <div class="diag-progress-wrap">
+        <div class="diag-progress-bar" id="diagBar"></div>
+      </div>
+      <div class="diag-step-label" id="diagStepLabel">Pergunta 1 de 5</div>
+
+      <!-- PERGUNTAS -->
+      <div class="diag-questions" id="diagQuestions">
+
+        <div class="diag-q active" data-q="0">
+          <div class="diag-q-txt">Quantos funcionários CLT sua empresa possui?</div>
+          <div class="diag-opts">
+            <button class="diag-opt" data-score="0">Nenhum / Só autônomos</button>
+            <button class="diag-opt" data-score="1">1 a 5 funcionários</button>
+            <button class="diag-opt" data-score="2">6 a 20 funcionários</button>
+            <button class="diag-opt" data-score="3">Mais de 20 funcionários</button>
+          </div>
+        </div>
+
+        <div class="diag-q" data-q="1">
+          <div class="diag-q-txt">Seus contratos de trabalho e documentos admissionais estão formalizados e atualizados?</div>
+          <div class="diag-opts">
+            <button class="diag-opt" data-score="0">Sim, tudo formalizado e revisado</button>
+            <button class="diag-opt" data-score="1">A maioria sim, alguns pendentes</button>
+            <button class="diag-opt" data-score="2">Usamos modelos genéricos da internet</button>
+            <button class="diag-opt" data-score="3">Não temos contratos formalizados</button>
+          </div>
+        </div>
+
+        <div class="diag-q" data-q="2">
+          <div class="diag-q-txt">Como sua empresa controla a jornada de trabalho dos funcionários?</div>
+          <div class="diag-opts">
+            <button class="diag-opt" data-score="0">Sistema eletrônico homologado, tudo registrado</button>
+            <button class="diag-opt" data-score="1">Planilha ou ponto manual, mas registrado</button>
+            <button class="diag-opt" data-score="2">Controle informal, sem registro consistente</button>
+            <button class="diag-opt" data-score="3">Não temos controle de jornada</button>
+          </div>
+        </div>
+
+        <div class="diag-q" data-q="3">
+          <div class="diag-q-txt">Sua empresa já sofreu alguma reclamação trabalhista nos últimos 3 anos?</div>
+          <div class="diag-opts">
+            <button class="diag-opt" data-score="0">Não, nenhuma</button>
+            <button class="diag-opt" data-score="1">Sim, 1 ou 2 — resolvidas</button>
+            <button class="diag-opt" data-score="2">Sim, 3 ou mais</button>
+            <button class="diag-opt" data-score="3">Sim, com condenações relevantes</button>
+          </div>
+        </div>
+
+        <div class="diag-q" data-q="4">
+          <div class="diag-q-txt">Sua empresa conta com assessoria jurídica trabalhista preventiva?</div>
+          <div class="diag-opts">
+            <button class="diag-opt" data-score="0">Sim, acompanhamento contínuo</button>
+            <button class="diag-opt" data-score="1">Eventual, só quando surge problema</button>
+            <button class="diag-opt" data-score="2">Raramente — usamos só contador</button>
+            <button class="diag-opt" data-score="3">Não temos nenhuma assessoria</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RESULTADO -->
+      <div class="diag-result" id="diagResult">
+        <div class="diag-result-icon" id="diagIcon"></div>
+        <div class="diag-result-nivel" id="diagNivel"></div>
+        <div class="diag-result-titulo" id="diagTitulo"></div>
+        <p class="diag-result-desc" id="diagDesc"></p>
+        <div class="diag-result-itens" id="diagItens"></div>
+        <div class="diag-result-btns">
+          <a href="#contato" class="btn-primary diag-cta-btn">Falar com Dr. Tessaro →</a>
+          <button class="btn-ghost" id="diagReset">Refazer diagnóstico</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ ABORDAGEM ══ -->
+<section class="section section--mid reveal" id="abordagem">
+  <div class="abord-split">
+    <div class="abord-visual">
+      <div class="abord-geo"></div>
+      <div class="abord-inner">
+        <div class="abord-stat">
+          <div class="abord-num">+15<sup>anos</sup></div>
+          <div class="abord-lbl">de atuação focada no patrono empresarial</div>
+        </div>
+        <div class="abord-stat">
+          <div class="abord-num">MS</div>
+          <div class="abord-lbl">seccional da OAB — Campo Grande</div>
+        </div>
+        <div class="abord-stat">
+          <div class="abord-num">3</div>
+          <div class="abord-lbl">eixos de especialização profunda</div>
+        </div>
+        <div class="abord-stat">
+          <div class="abord-num">0</div>
+          <div class="abord-lbl">respostas genéricas — só estratégia real</div>
+        </div>
+      </div>
+    </div>
+    <div class="abord-content">
+      <div class="s-eye">Nossa abordagem</div>
+      <h2 class="s-h">Antes de defender,<br><em>prevenimos.</em></h2>
+      <p class="s-p">O escritório foi construído com uma premissa: o melhor processo trabalhista é o que nunca chega ao tribunal. Nossa atuação começa no diagnóstico — antes do problema.</p>
+      <div class="abord-items">
+        <div class="abord-item">
+          <div class="abord-item-num">i.</div>
+          <div>
+            <div class="abord-item-title">Diagnóstico jurídico da empresa</div>
+            <div class="abord-item-desc">Mapeamos os riscos trabalhistas e contratuais antes que se tornem processos. Auditoria interna, revisão de documentos e cartografia de vulnerabilidades.</div>
+          </div>
+        </div>
+        <div class="abord-item">
+          <div class="abord-item-num">ii.</div>
+          <div>
+            <div class="abord-item-title">Estratégia personalizada, não genérica</div>
+            <div class="abord-item-desc">Cada empresa tem uma operação diferente. Desenvolvemos soluções específicas para cada segmento — do comércio ao agronegócio.</div>
+          </div>
+        </div>
+        <div class="abord-item">
+          <div class="abord-item-num">iii.</div>
+          <div>
+            <div class="abord-item-title">Defesa técnica e orientada a resultado</div>
+            <div class="abord-item-desc">Quando o processo já existe, a missão é minimizar o impacto. Acordos estratégicos, defesas técnicas e recursos bem fundamentados.</div>
+          </div>
+        </div>
+        <div class="abord-item">
+          <div class="abord-item-num">iv.</div>
+          <div>
+            <div class="abord-item-title">Relacionamento contínuo, não pontual</div>
+            <div class="abord-item-desc">Preferimos parceiros a clientes eventuais. Acompanhamento periódico transforma o jurídico de custo em vantagem competitiva.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ AGRONEGÓCIO ══ -->
+<section class="reveal" id="agro">
+  <div class="agro-wrap">
+    <div class="agro-left">
+      <div class="s-eye">Especialidade regional</div>
+      <h2 class="agro-titulo">O campo tem<br>suas próprias<br><em>regras jurídicas.</em></h2>
+      <p class="s-p" style="margin-top: 16px; max-width: 380px;">Mato Grosso do Sul é um dos maiores centros do agronegócio brasileiro. A complexidade dos contratos rurais, relações de trabalho no campo e regularização fundiária exige um advogado que entenda o setor — não apenas a lei.</p>
+      <div class="agro-badge">
+        <span>🌾</span>
+        <div class="agro-badge-txt">Atuação em todo o estado do MS</div>
+      </div>
+    </div>
+    <div class="agro-right">
+      <div class="s-eye" style="margin-bottom: 24px;">O que atendemos no agro</div>
+      <div class="agro-items">
+        <div class="agro-item"><div class="agro-item-txt"><strong>Contratos de arrendamento rural</strong> — elaboração e revisão com cláusulas protetivas</div></div>
+        <div class="agro-item"><div class="agro-item-txt"><strong>Parceria rural e meação</strong> — estruturação jurídica de acordos informais</div></div>
+        <div class="agro-item"><div class="agro-item-txt"><strong>Trabalhista rural</strong> — defesa do produtor em reclamações de empregados rurais</div></div>
+        <div class="agro-item"><div class="agro-item-txt"><strong>Contratos de financiamento agrícola</strong> — revisão de CPR, CCB e garantias</div></div>
+        <div class="agro-item"><div class="agro-item-txt"><strong>Regularização fundiária</strong> — escrituras, usucapião e georreferenciamento</div></div>
+        <div class="agro-item"><div class="agro-item-txt"><strong>Relações com cooperativas</strong> — contratos de fornecimento e representação</div></div>
+        <div class="agro-item"><div class="agro-item-txt"><strong>Compliance ambiental e trabalhista</strong> — adequação do produtor à legislação vigente</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ DR. TESSARO ══ -->
+<section class="section section--mid reveal" id="tessaro">
+  <div class="tessaro-split">
+    <div class="tessaro-visual">
+      <div class="tessaro-frame">
+        <div class="tessaro-placeholder">
+          <span>⚖️</span>
+          <p>Foto Dr. Tessaro</p>
+        </div>
+        <div class="tessaro-bottom">
+          <h3>Eduardo Felipe Tessaro</h3>
+          <span>Advogado · OAB/MS</span>
+        </div>
+      </div>
+      <div class="tessaro-badge"><b>+15</b><small>anos de<br>carreira</small></div>
+    </div>
+    <div>
+      <div class="s-eye">O patrono</div>
+      <h2 class="s-h">Formado para<br>defender quem<br><em>gera emprego.</em></h2>
+      <p class="s-p" style="margin-bottom: 36px;">Dr. Eduardo Felipe Tessaro construiu uma trajetória profissional deliberadamente voltada ao lado empresarial das relações de trabalho. Uma escolha que define o escritório: advocacia com posição clara, estratégia definida e profundo conhecimento do universo do empregador.</p>
+      <div class="tessaro-creds">
+        <div class="tcred"><div class="tcred__ico">🎓</div><div><div class="tcred__lbl">Formação</div><div class="tcred__val">Direito — especialização em Trabalhista Empresarial</div><div class="tcred__sub">Contratos e Direito do Agronegócio</div></div></div>
+        <div class="tcred"><div class="tcred__ico">📻</div><div><div class="tcred__lbl">Presença</div><div class="tcred__val">Colunista jurídico em rádios de Campo Grande</div><div class="tcred__sub">Referência regional em direito trabalhista empresarial</div></div></div>
+        <div class="tcred"><div class="tcred__ico">🤝</div><div><div class="tcred__lbl">Clientela</div><div class="tcred__val">Empresas, produtores rurais e cooperativas</div><div class="tcred__sub">Clientes de pequeno, médio e grande porte no MS</div></div></div>
+        <div class="tcred"><div class="tcred__ico">📍</div><div><div class="tcred__lbl">Sede</div><div class="tcred__val">Campo Grande, Mato Grosso do Sul</div><div class="tcred__sub">Atendimento presencial e remoto</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ FAQ ══ -->
+<section class="section section--dark reveal" id="faq">
+  <div class="faq-split">
+    <div>
+      <div class="s-eye">Perguntas frequentes</div>
+      <h2 class="s-h">O que todo<br>empregador<br><em>precisa saber.</em></h2>
+      <div style="margin-top: 32px;">
+        <a href="#contato" class="btn-primary">Falar agora →</a>
+      </div>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-btn">Como reduzir o risco de reclamações trabalhistas? <span class="faq-icon">+</span></button><div class="faq-answer">A prevenção começa com a regularidade dos documentos: contratos de trabalho bem redigidos, registros corretos e políticas internas claras. Uma auditoria trabalhista periódica identifica vulnerabilidades antes que se tornem processos. O Dr. Tessaro oferece diagnóstico completo para estruturar essa proteção.</div></div>
+      <div class="faq-item"><button class="faq-btn">Minha empresa foi notificada em uma reclamação. O que fazer? <span class="faq-icon">+</span></button><div class="faq-answer">Acionar o escritório imediatamente. Prazos no processo trabalhista são curtos e intransferíveis. Quanto antes a defesa for estruturada, maiores as chances de reduzir ou eliminar a condenação. Não responda ao reclamante sem orientação jurídica.</div></div>
+      <div class="faq-item"><button class="faq-btn">O contrato de arrendamento rural precisa de advogado? <span class="faq-icon">+</span></button><div class="faq-answer">Sim — e mais do que qualquer outro contrato. Contratos rurais têm regulamentação específica (Decreto 59.566/66), prazos mínimos obrigatórios e cláusulas que, se mal redigidas, podem dar ao arrendatário direitos superiores ao combinado. Um contrato bem feito protege a propriedade e a relação comercial.</div></div>
+      <div class="faq-item"><button class="faq-btn">Vale a pena fazer acordo trabalhista ou ir a julgamento? <span class="faq-icon">+</span></button><div class="faq-answer">Depende da análise técnica de cada caso. Acordos estratégicos podem ser vantajosos quando o risco de condenação é alto ou quando o custo processual supera o valor do acordo. O Dr. Tessaro faz essa análise com critérios objetivos — sem julgamentos precipitados.</div></div>
+      <div class="faq-item"><button class="faq-btn">Atendem empresas de outros municípios do MS? <span class="faq-icon">+</span></button><div class="faq-answer">Sim. O escritório atende presencialmente em Campo Grande e por videochamada para clientes em todo o estado. Para demandas em outras cidades do MS, atuamos com correspondentes de confiança quando necessário.</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ CONTATO ══ -->
+<div class="reveal" id="contato">
+  <div class="contato-wrap">
+    <div class="cont-left">
+      <div class="s-eye">Consulta estratégica</div>
+      <h2 class="s-h">Vamos analisar<br>o seu caso com<br><em>profundidade.</em></h2>
+      <p class="s-p">Sem respostas genéricas. A primeira conversa é um diagnóstico real da sua situação jurídica.</p>
+      <div class="cont-infos">
+        <div class="c-info"><div class="c-ico">📍</div><div><div class="c-lbl">Localização</div><div class="c-val">Campo Grande, Mato Grosso do Sul</div></div></div>
+        <div class="c-info"><div class="c-ico">📲</div><div><div class="c-lbl">WhatsApp</div><div class="c-val">Disponível para primeiro contato</div></div></div>
+        <div class="c-info"><div class="c-ico">💼</div><div><div class="c-lbl">Atendimento</div><div class="c-val">Presencial e por videoconferência</div></div></div>
+        <div class="c-info"><div class="c-ico">🌐</div><div><div class="c-lbl">Site</div><div class="c-val">tessaroadvogados.com.br</div></div></div>
+      </div>
+    </div>
+    <div class="cont-right">
+      <div class="s-eye" style="margin-bottom: 28px;">Envie sua mensagem</div>
+      <form class="c-form" id="contactForm">
+        <div class="c-row">
+          <div class="c-group"><label class="c-label">Nome</label><input type="text" class="c-inp" placeholder="Seu nome" required></div>
+          <div class="c-group"><label class="c-label">Empresa</label><input type="text" class="c-inp" placeholder="Nome da empresa"></div>
+        </div>
+        <div class="c-row">
+          <div class="c-group"><label class="c-label">WhatsApp</label><input type="tel" class="c-inp" placeholder="(67) 9 0000-0000"></div>
+          <div class="c-group"><label class="c-label">E-mail</label><input type="email" class="c-inp" placeholder="seu@email.com"></div>
+        </div>
+        <div class="c-group">
+          <label class="c-label">Área de interesse</label>
+          <select class="c-sel">
+            <option value="" disabled selected>Selecione</option>
+            <option>Trabalhista empresarial</option>
+            <option>Contratos</option>
+            <option>Agronegócio e Direito Rural</option>
+            <option>Direito Empresarial / Societário</option>
+            <option>Outro / Consultoria geral</option>
+          </select>
+        </div>
+        <div class="c-group"><label class="c-label">Descreva sua situação</label><textarea class="c-ta" placeholder="Resumo do caso ou dúvida..."></textarea></div>
+        <div class="c-btns">
+          <button type="submit" class="c-sub" id="formBtn">Enviar mensagem →</button>
+          <a href="https://wa.me/5567900000000?text=Olá%20Dr.%20Tessaro!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" class="c-wa">💬 WhatsApp</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CTA FINAL ══ -->
+<section class="sec-cta reveal">
+  <div class="cta-eye">O próximo passo</div>
+  <h2 class="cta-h">Juridicamente protegido<br>é crescer com<br><em>menos risco.</em></h2>
+  <p class="cta-p">Empresas que investem em assessoria jurídica preventiva gastam menos, processam menos e crescem com mais segurança. Vamos conversar.</p>
+  <div class="cta-btns">
+    <a href="#contato" class="btn-primary">Agendar consulta agora →</a>
+    <a href="https://wa.me/5567900000000" target="_blank" class="btn-ghost">💬 WhatsApp direto</a>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div>
+    <div class="fl-logo">Tessaro<em>Advogados</em></div>
+    <p class="fl-copy">© 2026 Tessaro Advogados.<br>Todos os direitos reservados.<br>OAB/MS — Campo Grande, MS.</p>
+  </div>
+  <nav class="fl-nav">
+    <a href="#pilares">Atuação</a>
+    <a href="#abordagem">Abordagem</a>
+    <a href="#agro">Agronegócio</a>
+    <a href="#tessaro">Dr. Tessaro</a>
+    <a href="#faq">Dúvidas</a>
+    <a href="#contato">Consulta</a>
+  </nav>
+  <div class="fl-social">
+    <a href="https://tessaroadvogados.com.br" target="_blank">🌐 tessaroadvogados.com.br</a>
+    <a href="https://wa.me/5567900000000" target="_blank">💬 WhatsApp</a>
+  </div>
+</footer>
+
+<script>
+
+
+/* PILARES ACORDEÃO */
+document.querySelectorAll('.pilar-acc .pilar-acc-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const card = btn.closest('.pilar-acc');
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.pilar-acc.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  });
+});
+
+/* NAV */
+window.addEventListener('scroll', () => {
+  document.getElementById('siteNav').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* MENU MOBILE */
+const mobMenu   = document.getElementById('mobMenu');
+const hamburger = document.getElementById('navHamburger');
+const mobClose  = document.getElementById('mobClose');
+function openMenu()  { mobMenu.classList.add('is-open'); document.body.style.overflow='hidden'; }
+function closeMenu() { mobMenu.classList.remove('is-open'); document.body.style.overflow=''; }
+hamburger.addEventListener('click', openMenu);
+mobClose.addEventListener('click', closeMenu);
+document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', closeMenu));
+
+/* REVEAL */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: .06 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* FAQ */
+document.querySelectorAll('.faq-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const was = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!was) item.classList.add('open');
+  });
+});
+
+/* DIAGNÓSTICO */
+(function(){
+  const perguntas = document.querySelectorAll('.diag-q');
+  const barEl     = document.getElementById('diagBar');
+  const labelEl   = document.getElementById('diagStepLabel');
+  const resultEl  = document.getElementById('diagResult');
+  const questionsEl = document.getElementById('diagQuestions');
+
+  let currentQ = 0;
+  let scores   = [];
+
+  const resultados = {
+    baixo: {
+      icon: '🛡️',
+      nivel: 'Risco Baixo',
+      cls: 'nivel-baixo',
+      titulo: 'Sua empresa está bem posicionada.',
+      desc: 'Você já adota as práticas fundamentais de proteção trabalhista. O risco de condenações é reduzido — mas a manutenção exige atenção contínua.',
+      itens: [
+        'Manter a documentação sempre atualizada',
+        'Revisão anual dos contratos de trabalho',
+        'Acompanhar mudanças na legislação trabalhista',
+      ]
+    },
+    medio: {
+      icon: '⚠️',
+      nivel: 'Risco Moderado',
+      cls: 'nivel-medio',
+      titulo: 'Existem vulnerabilidades que merecem atenção.',
+      desc: 'Sua empresa tem bases razoáveis, mas há lacunas que podem se transformar em reclamações trabalhistas — especialmente em caso de demissão mal conduzida.',
+      itens: [
+        'Formalizar e revisar contratos de trabalho',
+        'Implantar controle de jornada adequado',
+        'Estruturar política de desligamento',
+      ]
+    },
+    alto: {
+      icon: '🔴',
+      nivel: 'Risco Alto',
+      cls: 'nivel-alto',
+      titulo: 'Ação preventiva é urgente.',
+      desc: 'O perfil identificado apresenta múltiplas exposições. Empresas nesse estágio costumam acumular passivos trabalhistas antes de perceber — e o custo cresce a cada mês sem ação.',
+      itens: [
+        'Auditoria trabalhista completa com urgência',
+        'Regularização imediata de contratos e registros',
+        'Consultoria para revisão de práticas de jornada e benefícios',
+      ]
+    },
+    critico: {
+      icon: '🚨',
+      nivel: 'Risco Crítico',
+      cls: 'nivel-critico',
+      titulo: 'Sua empresa está exposta a passivos significativos.',
+      desc: 'O diagnóstico aponta para uma situação de exposição severa. Processos trabalhistas nesse cenário podem comprometer seriamente o caixa e a reputação da empresa. Proteção imediata é necessária.',
+      itens: [
+        'Consulta urgente para avaliação do passivo atual',
+        'Estruturação completa das relações de trabalho',
+        'Estratégia de mitigação e defesa preventiva',
+      ]
+    }
+  };
+
+  function avancar(score) {
+    scores.push(score);
+    currentQ++;
+    const pct = (currentQ / 5) * 100;
+    barEl.style.width = pct + '%';
+
+    if (currentQ < 5) {
+      document.querySelector(`.diag-q[data-q="${currentQ - 1}"]`).classList.remove('active');
+      const proxQ = document.querySelector(`.diag-q[data-q="${currentQ}"]`);
+      proxQ.classList.add('active');
+      labelEl.textContent = `Pergunta ${currentQ + 1} de 5`;
+    } else {
+      // calcular resultado
+      const total = scores.reduce((a, b) => a + b, 0);
+      let nivel;
+      if      (total <= 2)  nivel = 'baixo';
+      else if (total <= 5)  nivel = 'medio';
+      else if (total <= 9)  nivel = 'alto';
+      else                  nivel = 'critico';
+
+      const r = resultados[nivel];
+      questionsEl.style.display = 'none';
+      labelEl.style.display = 'none';
+
+      document.getElementById('diagIcon').textContent   = r.icon;
+      const nivelEl = document.getElementById('diagNivel');
+      nivelEl.textContent = r.nivel;
+      nivelEl.className   = 'diag-result-nivel ' + r.cls;
+      document.getElementById('diagTitulo').textContent = r.titulo;
+      document.getElementById('diagDesc').textContent   = r.desc;
+
+      const itensEl = document.getElementById('diagItens');
+      itensEl.innerHTML = r.itens.map(i =>
+        `<div class="diag-result-item"><span>→</span><span>${i}</span></div>`
+      ).join('');
+
+      resultEl.classList.add('visible');
+      barEl.style.width = '100%';
+    }
+  }
+
+  document.querySelectorAll('.diag-opt').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const score = parseInt(this.dataset.score);
+      // feedback visual breve
+      this.classList.add('selected');
+      setTimeout(() => avancar(score), 280);
+    });
+  });
+
+  document.getElementById('diagReset').addEventListener('click', function() {
+    scores = []; currentQ = 0;
+    barEl.style.width = '0%';
+    labelEl.style.display = '';
+    labelEl.textContent = 'Pergunta 1 de 5';
+    resultEl.classList.remove('visible');
+    questionsEl.style.display = '';
+    document.querySelectorAll('.diag-q').forEach(q => q.classList.remove('active'));
+    document.querySelectorAll('.diag-opt').forEach(o => o.classList.remove('selected'));
+    document.querySelector('.diag-q[data-q="0"]').classList.add('active');
+  });
+})();
+
+/* FORM */
+document.getElementById('contactForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = document.getElementById('formBtn');
+  btn.textContent = 'Mensagem enviada ✓';
+  btn.style.background = 'var(--gold-lt)';
+  setTimeout(() => { btn.textContent='Enviar mensagem →'; btn.style.background=''; e.target.reset(); }, 3500);
+});
+</script>
+</body>
+</html>
